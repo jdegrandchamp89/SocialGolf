@@ -15,4 +15,5 @@
     </string>
     <string name="action_register">Register</string>
     <string name="title_activity_main">Home</string>
+    <string name="title_activity_register">Register</string>
 </resources>
