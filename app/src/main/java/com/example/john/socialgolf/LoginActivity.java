@@ -341,7 +341,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Intent toHome = new Intent(LoginActivity.this, MainActivity.class);
+                Intent toHome = new Intent(LoginActivity.this, NavDrawerActivity.class);
                 startActivity(toHome);
                 finish();
             } else {

@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button completeRegistration = (Button) findViewById(R.id.Complete_Registration);
         completeRegistration.setOnClickListener(v -> {
-            Intent toHome = new Intent(RegisterActivity.this, MainActivity.class);
+            Intent toHome = new Intent(RegisterActivity.this, NavDrawerActivity.class);
             startActivity(toHome);
             finish();
         });
