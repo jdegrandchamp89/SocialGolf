@@ -1,8 +1,11 @@
 package com.example.john.socialgolf;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +16,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import layout.GolfBuddiesFragment;
+import layout.HomeFragment;
+import layout.MessagesFragment;
+import layout.MyTeeTimesFragment;
+import layout.SettingsFragment;
+
 public class NavDrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements  NavigationView.OnNavigationItemSelectedListener,
+                    HomeFragment.OnFragmentInteractionListener,
+                    GolfBuddiesFragment.OnFragmentInteractionListener,
+                    MyTeeTimesFragment.OnFragmentInteractionListener,
+                    MessagesFragment.OnFragmentInteractionListener,
+                    SettingsFragment.OnFragmentInteractionListener{
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -28,6 +42,20 @@ public class NavDrawerActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         setSupportActionBar(toolbar);
+
+        if (savedInstanceState == null) {
+            Fragment fragment = null;
+            Class fragmentClass = null;
+            fragmentClass = HomeFragment.class;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+        }
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -108,25 +136,51 @@ public class NavDrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment = null;
+        Class fragmentClass = null;
+
         if (id == R.id.nav_home) {
             mTitle = "SocialGolf";
             getSupportActionBar().setTitle(mTitle);
+
+            fragmentClass = HomeFragment.class;
         } else if (id == R.id.nav_golf_buddies) {
             mTitle = "Golf Buddies";
             getSupportActionBar().setTitle(mTitle);
+
+            fragmentClass = GolfBuddiesFragment.class;
         } else if (id == R.id.nav_tee_times) {
             mTitle = "My Tee Times";
             getSupportActionBar().setTitle(mTitle);
+
+            fragmentClass = MyTeeTimesFragment.class;
         } else if (id == R.id.nav_messages) {
             mTitle = "Messages";
             getSupportActionBar().setTitle(mTitle);
+
+            fragmentClass = MessagesFragment.class;
         } else if (id == R.id.nav_settings) {
             mTitle = "Settings";
             getSupportActionBar().setTitle(mTitle);
+
+            fragmentClass = SettingsFragment.class;
         }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

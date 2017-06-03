@@ -23,4 +23,11 @@
 
     <string name="action_settings">Settings</string>
     <string name="navbar_settings">navbar_settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Blank Home Fragment</string>
+    <string name="hello_golf_buddies">Blank Golf Buddies Fragment</string>
+    <string name="hello_my_tee_times">Blank My Tee Times Fragment</string>
+    <string name="hello_messages">Blank Messages Fragment</string>
+    <string name="hello_settings">Blank Settings Fragment</string>
 </resources>
