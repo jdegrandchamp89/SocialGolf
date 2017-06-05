@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.john.socialgolf.dummy.TeeTimeContent;
+
 import layout.GolfBuddiesFragment;
 import layout.HomeFragment;
 import layout.MessagesFragment;
@@ -28,7 +30,8 @@ public class NavDrawerActivity extends AppCompatActivity
                     GolfBuddiesFragment.OnFragmentInteractionListener,
                     MyTeeTimesFragment.OnFragmentInteractionListener,
                     MessagesFragment.OnFragmentInteractionListener,
-                    SettingsFragment.OnFragmentInteractionListener{
+                    SettingsFragment.OnFragmentInteractionListener,
+                    TeeTimesFragment.OnListFragmentInteractionListener{
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -182,5 +185,10 @@ public class NavDrawerActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onListFragmentInteraction(TeeTimeContent.TeeTimeItem item) {
+        System.out.println("Interact!");
     }
 }
