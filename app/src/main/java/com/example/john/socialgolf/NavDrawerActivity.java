@@ -2,8 +2,6 @@ package com.example.john.socialgolf;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -16,7 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.john.socialgolf.dummy.DummyContent;
+import com.example.john.socialgolf.dummy.MessageContent;
+import com.example.john.socialgolf.dummy.GolfBuddiesContent;
 import com.example.john.socialgolf.dummy.TeeTimeContent;
 
 import layout.GolfBuddiesFragment;
@@ -196,7 +195,12 @@ public class NavDrawerActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(GolfBuddiesContent.GolfBuddiesItem item) {
+        System.out.println("Interact!");
+    }
+
+    @Override
+    public void onListFragmentInteraction(MessageContent.MessageItem item) {
         System.out.println("Interact!");
     }
 }

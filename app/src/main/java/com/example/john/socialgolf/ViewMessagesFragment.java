@@ -11,10 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.john.socialgolf.dummy.DummyContent;
-import com.example.john.socialgolf.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.example.john.socialgolf.dummy.MessageContent;
+import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
 
 /**
  * A fragment representing a list of Items.
@@ -70,7 +68,7 @@ public class ViewMessagesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ViewMessagesRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new ViewMessagesRecyclerViewAdapter(MessageContent.ITEMS, mListener));
 
             DividerItemDecoration did = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
             recyclerView.addItemDecoration(did);
@@ -108,6 +106,6 @@ public class ViewMessagesFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(MessageContent.MessageItem item);
     }
 }

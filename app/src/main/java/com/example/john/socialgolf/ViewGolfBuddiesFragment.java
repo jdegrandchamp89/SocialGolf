@@ -3,6 +3,7 @@ package com.example.john.socialgolf;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.john.socialgolf.dummy.DummyContent;
-import com.example.john.socialgolf.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.example.john.socialgolf.dummy.MessageContent;
+import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
+import com.example.john.socialgolf.dummy.GolfBuddiesContent;
 
 /**
  * A fragment representing a list of Items.
@@ -69,7 +69,10 @@ public class ViewGolfBuddiesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ViewGolfBuddiesRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new ViewGolfBuddiesRecyclerViewAdapter(GolfBuddiesContent.ITEMS, mListener));
+
+            DividerItemDecoration did = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            recyclerView.addItemDecoration(did);
         }
         return view;
     }
@@ -104,6 +107,6 @@ public class ViewGolfBuddiesFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(GolfBuddiesContent.GolfBuddiesItem item);
     }
 }

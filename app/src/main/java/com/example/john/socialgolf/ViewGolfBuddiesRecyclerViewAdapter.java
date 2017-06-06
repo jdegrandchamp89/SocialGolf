@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.john.socialgolf.ViewGolfBuddiesFragment.OnListFragmentInteractionListener;
-import com.example.john.socialgolf.dummy.DummyContent.DummyItem;
+import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
+import com.example.john.socialgolf.dummy.GolfBuddiesContent;
 
 import java.util.List;
 
@@ -18,10 +19,10 @@ import java.util.List;
  */
 public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<ViewGolfBuddiesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<GolfBuddiesContent.GolfBuddiesItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public ViewGolfBuddiesRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public ViewGolfBuddiesRecyclerViewAdapter(List<GolfBuddiesContent.GolfBuddiesItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +37,8 @@ public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<Vie
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mName.setText(mValues.get(position).name);
+        holder.mRoundsPlayed.setText(mValues.get(position).roundsPlayed.toString());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,20 +59,20 @@ public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<Vie
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mName;
+        public final TextView mRoundsPlayed;
+        public GolfBuddiesContent.GolfBuddiesItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mName = (TextView) view.findViewById(R.id.id);
+            mRoundsPlayed = (TextView) view.findViewById(R.id.content);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mRoundsPlayed.getText() + "'";
         }
     }
 }

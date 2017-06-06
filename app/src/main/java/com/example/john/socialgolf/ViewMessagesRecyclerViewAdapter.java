@@ -7,21 +7,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.john.socialgolf.ViewMessagesFragment.OnListFragmentInteractionListener;
-import com.example.john.socialgolf.dummy.DummyContent.DummyItem;
+import com.example.john.socialgolf.dummy.MessageContent;
+import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class ViewMessagesRecyclerViewAdapter extends RecyclerView.Adapter<ViewMessagesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<MessageContent.MessageItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public ViewMessagesRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public ViewMessagesRecyclerViewAdapter(List<MessageContent.MessageItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +36,8 @@ public class ViewMessagesRecyclerViewAdapter extends RecyclerView.Adapter<ViewMe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).name);
+        holder.mContentView.setText(mValues.get(position).lastMessage);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +60,7 @@ public class ViewMessagesRecyclerViewAdapter extends RecyclerView.Adapter<ViewMe
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public MessageContent.MessageItem mItem;
 
         public ViewHolder(View view) {
             super(view);
