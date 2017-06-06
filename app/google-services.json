@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "60608558981",
+    "firebase_url": "https://socialgolf-57614.firebaseio.com",
+    "project_id": "socialgolf-57614",
+    "storage_bucket": "socialgolf-57614.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60608558981:android:0ed84476dac48efe",
+        "android_client_info": {
+          "package_name": "com.example.john.socialgolf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60608558981-qo482u7fqngi0ghb8n81ev59kdpjnad0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIoRLoIg9GvosRgPO9Y7XYWhg5zOxC9Yo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
