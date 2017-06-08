@@ -217,28 +217,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 //updateUI(user);
-                                success = true;
+                                Intent toHome = new Intent(LoginActivity.this, NavDrawerActivity.class);
+                                startActivity(toHome);
+                                finish();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                                 //updateUI(null
+                                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                                mPasswordView.requestFocus();
                             }
-
+                            showProgress(false);
                             // ...
                         }
                     });
-
-            showProgress(false);
-            if (success) {
-                Intent toHome = new Intent(LoginActivity.this, NavDrawerActivity.class);
-                startActivity(toHome);
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
         }
     }
 
