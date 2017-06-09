@@ -134,9 +134,28 @@ public class RegisterActivity extends AppCompatActivity {
                                             }
                                         });
 
-                                Intent toHome = new Intent(RegisterActivity.this, NavDrawerActivity.class);
-                                startActivity(toHome);
-                                finish();
+                                mAuth.signInWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d(TAG, "signInWithEmail:success");
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+
+                                                    Intent toHome = new Intent(RegisterActivity.this, NavDrawerActivity.class);
+                                                    startActivity(toHome);
+                                                    finish();
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                                    Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                                showProgress(false);
+                                                // ...
+                                            }
+                                        });
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -197,8 +216,8 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
 
-            mEmail.setVisibility(show ? View.GONE : View.VISIBLE);
-            mEmail.animate().setDuration(shortAnimTime).alpha(
+            mPasswordConfirm.setVisibility(show ? View.GONE : View.VISIBLE);
+            mPasswordConfirm.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
