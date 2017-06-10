@@ -13,10 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.john.socialgolf.dummy.MessageContent;
 import com.example.john.socialgolf.dummy.GolfBuddiesContent;
 import com.example.john.socialgolf.dummy.TeeTimeContent;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import layout.GolfBuddiesFragment;
 import layout.HomeFragment;
@@ -48,6 +52,10 @@ public class NavDrawerActivity extends AppCompatActivity
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         setSupportActionBar(toolbar);
 
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+
         if (savedInstanceState == null) {
             Fragment fragment = null;
             Class fragmentClass = null;
@@ -60,11 +68,25 @@ public class NavDrawerActivity extends AppCompatActivity
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                // Name, email address, and profile photo Url
+                String name = user.getDisplayName();
+                String email = user.getEmail();
+                Uri picture = user.getPhotoUrl();
+
+                TextView displayName = (TextView) headerView.findViewById(R.id.name);
+                TextView displayEmail = (TextView) headerView.findViewById(R.id.email);
+                ImageView profPicture = (ImageView) headerView.findViewById(R.id.profPicture);
+
+                displayName.setText(name);
+                displayEmail.setText(email);
+                profPicture.setImageURI(picture);
+            }
         }
 
         mTitle = mDrawerTitle = getTitle();
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         toggle = new ActionBarDrawerToggle(
                 this,
@@ -88,7 +110,6 @@ public class NavDrawerActivity extends AppCompatActivity
             }
         };
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         toggle.setDrawerIndicatorEnabled(true);
