@@ -70,7 +70,7 @@ public class MyTeeTimesFragment extends Fragment {
         FloatingActionButton createTeeTime = (FloatingActionButton) view.findViewById(R.id.addTeeTime);
 
         createTeeTime.setOnClickListener(v -> {
-            
+
         });
 
         return view;
