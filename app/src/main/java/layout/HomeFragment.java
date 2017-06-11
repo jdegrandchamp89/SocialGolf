@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,7 @@ import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.Environment.getExternalStoragePublicDirectory;
+import static com.example.john.socialgolf.R.id.name;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -213,6 +216,18 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     });
+
+            String uid = user.getUid();
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+            Uri profPicture = null;
+
+            while (profPicture == null){
+                profPicture = user.getPhotoUrl();
+            }
+            if (profPicture != null){
+                database.child("users").child(uid).child("picture").setValue(profPicture.toString());
+            }
         }
+
     }
 }

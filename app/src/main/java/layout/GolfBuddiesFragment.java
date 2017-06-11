@@ -1,14 +1,21 @@
 package layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.john.socialgolf.AddFriendActivity;
+import com.example.john.socialgolf.LoginActivity;
 import com.example.john.socialgolf.R;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +30,7 @@ public class GolfBuddiesFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static int ADDFRIENDRESULT = 1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -65,7 +73,16 @@ public class GolfBuddiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_golf_buddies, container, false);
+        View view = inflater.inflate(R.layout.fragment_golf_buddies, container, false);
+
+        FloatingActionButton addFriend = (FloatingActionButton) view.findViewById(R.id.addBuddy);
+
+        addFriend.setOnClickListener(v -> {
+            Intent toAddFriend = new Intent(getActivity(), AddFriendActivity.class);
+            startActivityForResult(toAddFriend, ADDFRIENDRESULT);
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,5 +122,15 @@ public class GolfBuddiesFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == ADDFRIENDRESULT) {
+            Toast.makeText(getActivity(), "Friend Added Successfully!",
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
