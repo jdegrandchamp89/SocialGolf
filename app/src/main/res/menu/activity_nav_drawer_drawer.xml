@@ -9,7 +9,7 @@
         <item
             android:id="@+id/nav_golf_buddies"
             android:icon="@drawable/ic_contacts_black_24dp"
-            android:title="Golf Buddies" />
+            android:title="Friends" />
         <item
             android:id="@+id/nav_tee_times"
             android:icon="@drawable/ic_golf_course_black_24dp"

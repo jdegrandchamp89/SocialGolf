@@ -1,5 +1,6 @@
 package com.example.john.socialgolf;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -143,10 +144,14 @@ public class NavDrawerActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        if (item.getItemId() == R.id.action_log_off) {
+            FirebaseAuth.getInstance().signOut();
+            Intent toLogin = new Intent(NavDrawerActivity.this, LoginActivity.class);
+            startActivity(toLogin);
+            finish();
+
+            return true;
+        }
 
         // Activate the navigation drawer toggle
         if (toggle.onOptionsItemSelected(item)) {
@@ -171,7 +176,7 @@ public class NavDrawerActivity extends AppCompatActivity
 
             fragmentClass = HomeFragment.class;
         } else if (id == R.id.nav_golf_buddies) {
-            mTitle = "Golf Buddies";
+            mTitle = "Friends";
             getSupportActionBar().setTitle(mTitle);
 
             fragmentClass = GolfBuddiesFragment.class;
