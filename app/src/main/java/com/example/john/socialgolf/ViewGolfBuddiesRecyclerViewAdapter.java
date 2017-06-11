@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.john.socialgolf.ViewGolfBuddiesFragment.OnListFragmentInteractionListener;
@@ -19,12 +20,17 @@ import java.util.List;
  */
 public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<ViewGolfBuddiesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<GolfBuddiesContent.GolfBuddiesItem> mValues;
+    private List<GolfBuddiesContent.GolfBuddiesItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public ViewGolfBuddiesRecyclerViewAdapter(List<GolfBuddiesContent.GolfBuddiesItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+    }
+
+    public void reloadFrom(final List<GolfBuddiesContent.GolfBuddiesItem> data) {
+        mValues = data;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -38,7 +44,8 @@ public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<Vie
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mName.setText(mValues.get(position).name);
-        holder.mRoundsPlayed.setText(mValues.get(position).roundsPlayed.toString());
+        holder.mEmail.setText(mValues.get(position).email);
+        holder.mPicture.setImageURI(mValues.get(position).picture);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,19 +67,21 @@ public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<Vie
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mName;
-        public final TextView mRoundsPlayed;
+        public final TextView mEmail;
+        public final ImageView mPicture;
         public GolfBuddiesContent.GolfBuddiesItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mName = (TextView) view.findViewById(R.id.id);
-            mRoundsPlayed = (TextView) view.findViewById(R.id.content);
+            mName = (TextView) view.findViewById(R.id.name);
+            mEmail = (TextView) view.findViewById(R.id.email);
+            mPicture = (ImageView) view.findViewById(R.id.profPicture);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mRoundsPlayed.getText() + "'";
+            return super.toString() + " '" + mEmail + "'";
         }
     }
 }
