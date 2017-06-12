@@ -17,17 +17,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.R;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -110,7 +120,18 @@ public class HomeFragment extends Fragment {
             String displayName = user.getDisplayName();
             String displayEmail = user.getEmail();
 
-            mProfPicture.setImageURI(picture);
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            // Create a storage reference from our app
+            // Create a reference to a file from a Google Cloud Storage URI
+            if(picture != null){
+                StorageReference gsReference = storage.getReferenceFromUrl(picture.toString());
+
+                //mProfPicture.setImageURI(picture);
+                Glide.with(getContext())
+                        .using(new FirebaseImageLoader())
+                        .load(gsReference)
+                        .into(mProfPicture);
+            }
             name.setText(displayName);
             email.setText(displayEmail);
         }
@@ -225,7 +246,57 @@ public class HomeFragment extends Fragment {
                 profPicture = user.getPhotoUrl();
             }
             if (profPicture != null){
-                database.child("users").child(uid).child("picture").setValue(profPicture.toString());
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                // Create a storage reference from our app
+                StorageReference storageRef = storage.getReference();
+                // Create a reference to "mountains.jpg"
+                StorageReference mountainsRef = storageRef.child(mCurrentPhotoPath);
+
+                try{
+                    InputStream stream = new FileInputStream(new File(mCurrentPhotoPath));
+
+                    UploadTask uploadTask = mountainsRef.putStream(stream);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                            database.child("users").child(uid).child("picture").setValue(downloadUrl.toString());
+                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                            // Create a storage reference from our app
+                            // Create a reference to a file from a Google Cloud Storage URI
+                            StorageReference gsReference = storage.getReferenceFromUrl(downloadUrl.toString());
+                            //String path = gsReference.getPath();
+
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setPhotoUri(downloadUrl)
+                                    .build();
+
+                            user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "User profile updated.");
+                                                //mProfPicture.setImageURI(contentUri);
+                                                Glide.with(getContext())
+                                                        .using(new FirebaseImageLoader())
+                                                        .load(gsReference)
+                                                        .into(mProfPicture);
+                                            }
+                                        }
+                                    });
+                        }
+                    });
+                }catch(java.io.FileNotFoundException e){
+
+                }
             }
         }
 

@@ -17,11 +17,15 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.dummy.MessageContent;
 import com.example.john.socialgolf.dummy.GolfBuddiesContent;
 import com.example.john.socialgolf.dummy.TeeTimeContent;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import layout.GolfBuddiesFragment;
 import layout.HomeFragment;
@@ -83,7 +87,18 @@ public class NavDrawerActivity extends AppCompatActivity
 
                 displayName.setText(name);
                 displayEmail.setText(email);
-                profPicture.setImageURI(picture);
+                //profPicture.setImageURI(picture);
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                // Create a storage reference from our app
+                // Create a reference to a file from a Google Cloud Storage URI
+                if(picture != null){
+                    StorageReference gsReference = storage.getReferenceFromUrl(picture.toString());
+
+                    Glide.with(this)
+                            .using(new FirebaseImageLoader())
+                            .load(gsReference)
+                            .into(profPicture);
+                }
             }
         }
 

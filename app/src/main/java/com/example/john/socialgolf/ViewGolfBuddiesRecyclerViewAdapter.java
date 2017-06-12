@@ -1,5 +1,6 @@
 package com.example.john.socialgolf;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.ViewGolfBuddiesFragment.OnListFragmentInteractionListener;
 import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
 import com.example.john.socialgolf.dummy.GolfBuddiesContent;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -45,7 +50,17 @@ public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<Vie
         holder.mItem = mValues.get(position);
         holder.mName.setText(mValues.get(position).name);
         holder.mEmail.setText(mValues.get(position).email);
-        holder.mPicture.setImageURI(mValues.get(position).picture);
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        // Create a reference to a file from a Google Cloud Storage URI
+        StorageReference gsReference = storage.getReferenceFromUrl(mValues.get(position).picture.toString());
+        String path = gsReference.getPath();
+        Glide.with(holder.mView.getContext())
+                .using(new FirebaseImageLoader())
+                .load(gsReference)
+                .into(holder.mPicture);
+        //holder.mPicture.setImageURI(Uri.parse("gs://socialgolf-57614.appspot.com" + path));//mValues.get(position).picture);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
