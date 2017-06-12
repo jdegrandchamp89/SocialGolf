@@ -227,16 +227,16 @@ public class HomeFragment extends Fragment {
                     .setPhotoUri(contentUri)
                     .build();
 
-            user.updateProfile(profileUpdates)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "User profile updated.");
-                                mProfPicture.setImageURI(contentUri);
-                            }
-                        }
-                    });
+            user.updateProfile(profileUpdates);
+//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful()) {
+//                                Log.d(TAG, "User profile updated.");
+//                                mProfPicture.setImageURI(contentUri);
+//                            }
+//                        }
+//                    });
 
             String uid = user.getUid();
             DatabaseReference database = FirebaseDatabase.getInstance().getReference();
