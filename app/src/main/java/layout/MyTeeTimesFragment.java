@@ -1,6 +1,7 @@
 package layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.john.socialgolf.AddTeeTimeActivity;
 import com.example.john.socialgolf.R;
 
 /**
@@ -28,6 +30,8 @@ public class MyTeeTimesFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private static final Integer ADD_TEE_TIME = 1;
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,7 +74,8 @@ public class MyTeeTimesFragment extends Fragment {
         FloatingActionButton createTeeTime = (FloatingActionButton) view.findViewById(R.id.addTeeTime);
 
         createTeeTime.setOnClickListener(v -> {
-
+            Intent addTeeTime = new Intent(getActivity(), AddTeeTimeActivity.class);
+            startActivityForResult(addTeeTime, ADD_TEE_TIME);
         });
 
         return view;

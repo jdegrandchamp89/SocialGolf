@@ -31,4 +31,5 @@
     <string name="hello_messages">Blank Messages Fragment</string>
     <string name="hello_settings">Blank Settings Fragment</string>
     <string name="title_activity_add_friend">Add Friend</string>
+    <string name="title_activity_add_tee_time">Add Tee Time</string>
 </resources>

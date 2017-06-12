@@ -66,6 +66,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.john.socialgolf.NavDrawerActivity" />
         </activity>
+        <activity
+            android:name=".AddTeeTimeActivity"
+            android:label="@string/title_activity_add_tee_time"
+            android:parentActivityName=".NavDrawerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.john.socialgolf.NavDrawerActivity" />
+        </activity>
     </application>
 
 </manifest>
