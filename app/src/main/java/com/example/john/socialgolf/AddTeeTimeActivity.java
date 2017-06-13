@@ -1,11 +1,15 @@
 package com.example.john.socialgolf;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -33,6 +37,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.READ_CONTACTS;
 
 public class AddTeeTimeActivity extends AppCompatActivity {
 
@@ -122,8 +129,10 @@ public class AddTeeTimeActivity extends AppCompatActivity {
     }
 
     private void pickPlace() {
-        Intent intent = new Intent(this, PlacePicker.class);
-        startActivityForResult(intent, 9001);
+        if (mayRequestLocation()) {
+            Intent intent = new Intent(this, PlacePicker.class);
+            startActivityForResult(intent, 9001);
+        }
     }
 
     @Override
@@ -134,6 +143,28 @@ public class AddTeeTimeActivity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private boolean mayRequestLocation() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        if (checkSelfPermission(ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
+            Snackbar.make(golfCourse, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        @TargetApi(Build.VERSION_CODES.M)
+                        public void onClick(View v) {
+                            requestPermissions(new String[]{ACCESS_FINE_LOCATION}, 0);
+                        }
+                    });
+        } else {
+            requestPermissions(new String[]{ACCESS_FINE_LOCATION}, 0);
+        }
+        return false;
     }
 
 }

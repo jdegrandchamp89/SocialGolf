@@ -42,7 +42,14 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:10.2.1'
     compile 'com.firebaseui:firebase-ui-storage:0.6.0'
     compile 'com.foursquare:placepicker:0.6.1'
-    compile 'com.google.android.gms:play-services-places:10.2.1'
+
+    compile rootProject.ext.glide
+    compile rootProject.ext.glideOkHttp
+    //Play service
+    compile rootProject.ext.playServicesBase
+    compile rootProject.ext.playServicesAds
+    compile rootProject.ext.playServicesLocation
+
     testCompile 'junit:junit:4.12'
 }
 
