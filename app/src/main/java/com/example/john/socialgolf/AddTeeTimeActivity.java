@@ -7,22 +7,18 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.dataObjects.Friends;
 import com.example.john.socialgolf.dataObjects.Users;
-import com.example.john.socialgolf.dummy.GolfBuddiesContent;
+import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
 import com.foursquare.api.types.Venue;
 import com.foursquare.placepicker.PlacePicker;
 import com.foursquare.placepicker.PlacePickerSdk;
@@ -34,12 +30,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.READ_CONTACTS;
 
 public class AddTeeTimeActivity extends AppCompatActivity {
 
@@ -131,6 +125,7 @@ public class AddTeeTimeActivity extends AppCompatActivity {
     private void pickPlace() {
         if (mayRequestLocation()) {
             Intent intent = new Intent(this, PlacePicker.class);
+            intent.putExtra(PlacePicker.EXTRA_QUERY, "golf course");
             startActivityForResult(intent, 9001);
         }
     }

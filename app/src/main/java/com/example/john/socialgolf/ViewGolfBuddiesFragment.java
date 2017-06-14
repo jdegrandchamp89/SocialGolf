@@ -15,9 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.john.socialgolf.dataObjects.Friends;
 import com.example.john.socialgolf.dataObjects.Users;
-import com.example.john.socialgolf.dummy.MessageContent;
-import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
-import com.example.john.socialgolf.dummy.GolfBuddiesContent;
+import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

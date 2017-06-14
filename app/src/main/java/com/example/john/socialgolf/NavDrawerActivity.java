@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.dummy.MessageContent;
-import com.example.john.socialgolf.dummy.GolfBuddiesContent;
+import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
 import com.example.john.socialgolf.dummy.TeeTimeContent;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;

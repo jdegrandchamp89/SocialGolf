@@ -1,29 +1,9 @@
-package com.example.john.socialgolf.dummy;
+package com.example.john.socialgolf.dataObjects;
 
-import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 
-import com.example.john.socialgolf.AddFriendActivity;
-import com.example.john.socialgolf.NavDrawerActivity;
-import com.example.john.socialgolf.dataObjects.Friends;
-import com.example.john.socialgolf.dataObjects.Users;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import layout.GolfBuddiesFragment;
 
 /**
  * Helper class for providing sample content for user interfaces created by

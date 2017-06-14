@@ -1,6 +1,5 @@
 package com.example.john.socialgolf;
 
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.ViewGolfBuddiesFragment.OnListFragmentInteractionListener;
-import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
-import com.example.john.socialgolf.dummy.GolfBuddiesContent;
+import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
