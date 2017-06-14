@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.john.socialgolf.TeeTimesFragment.OnListFragmentInteractionListener;
-import com.example.john.socialgolf.dummy.TeeTimeContent.TeeTimeItem;
+import com.example.john.socialgolf.dataObjects.TeeTimeItem;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -42,7 +42,7 @@ public class TeeTimesRecyclerViewAdapter extends RecyclerView.Adapter<TeeTimesRe
         holder.mDateView.setText(localDateFormat.format(mValues.get(position).teeTimeDate));
 
         holder.mTimeView.setText(mValues.get(position).teeTimeTime);
-        holder.mGroupMembers.setText(mValues.get(position).groupMembers.toString());
+        holder.mGroupMembers.setText(Integer.toString(mValues.get(position).groupMembers.size()));
         holder.mBooked.setText(mValues.get(position).booked);
         holder.mCourse.setText(mValues.get(position).course);
 

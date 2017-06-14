@@ -2,7 +2,6 @@ package com.example.john.socialgolf;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.john.socialgolf.dummy.TeeTimeContent;
-import com.example.john.socialgolf.dummy.TeeTimeContent.TeeTimeItem;
+import com.example.john.socialgolf.dataObjects.TeeTimeItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +29,7 @@ public class TeeTimesFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private List<TeeTimeItem> teeTimeList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -68,7 +70,8 @@ public class TeeTimesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new TeeTimesRecyclerViewAdapter(TeeTimeContent.ITEMS, mListener));
+            teeTimeList = new ArrayList<TeeTimeItem>();
+            recyclerView.setAdapter(new TeeTimesRecyclerViewAdapter(teeTimeList, mListener));
 
             DividerItemDecoration did = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
             recyclerView.addItemDecoration(did);

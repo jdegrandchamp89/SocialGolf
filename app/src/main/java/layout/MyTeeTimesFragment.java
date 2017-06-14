@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.john.socialgolf.AddTeeTimeActivity;
 import com.example.john.socialgolf.R;
@@ -31,7 +32,7 @@ public class MyTeeTimesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private static final Integer ADD_TEE_TIME = 1;
+    public static final Integer ADD_TEE_TIME = 1;
 
     private OnFragmentInteractionListener mListener;
 
@@ -118,5 +119,15 @@ public class MyTeeTimesFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == ADD_TEE_TIME) {
+            Toast.makeText(getActivity(), "Tee Time Added Successfully!",
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.dummy.MessageContent;
 import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
-import com.example.john.socialgolf.dummy.TeeTimeContent;
+import com.example.john.socialgolf.dataObjects.TeeTimeItem;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -231,7 +231,7 @@ public class NavDrawerActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(TeeTimeContent.TeeTimeItem item) {
+    public void onListFragmentInteraction(TeeTimeItem item) {
         System.out.println("Interact!");
     }
 
