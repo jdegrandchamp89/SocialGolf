@@ -77,6 +77,7 @@ public class DisplayConversationFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        messageKey = null;
     }
 
     @Override
@@ -98,8 +99,10 @@ public class DisplayConversationFragment extends Fragment {
                     // Get Post object and use the values to update the UI
                     messages = new ArrayList<Messages>();
 
-                    ViewSendMessageActivity activity = (ViewSendMessageActivity) getActivity();
-                    messageKey = activity.getKey();
+                    if(messageKey == null) {
+                        ViewSendMessageActivity activity = (ViewSendMessageActivity) getActivity();
+                        messageKey = activity.getKey();
+                    }
 
                     if(messageKey == null){
                         Intent extras = new Intent();

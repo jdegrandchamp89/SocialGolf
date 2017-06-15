@@ -44,6 +44,7 @@ public class ViewSendMessageActivity extends AppCompatActivity
     private static final String TAG = "SelectFriends";
     private EditText messageContent;
     public String messageKey;
+    private Intent extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +92,13 @@ public class ViewSendMessageActivity extends AppCompatActivity
                 }
 
                 List<String> setVals = new ArrayList<String>();
-                Intent extras = new Intent();
                 if(extras.hasExtra("members")){
                     Parcelable parcel = extras.getParcelableExtra("members");
                     List<Friends> members = Parcels.unwrap(parcel);
 
                     for(Friends member : members){
                         for(Users user: usersList){
-                            if(member.uid.contentEquals(user.uid)){
+                            if(member.uid.contentEquals(user.name)){
                                 setVals.add(user.email);
                                 break;
                             }
@@ -129,7 +129,7 @@ public class ViewSendMessageActivity extends AppCompatActivity
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent extras = getIntent();
+        extras = getIntent();
         if(extras.hasExtra("key")){
             String key = extras.getStringExtra("key");
             messageKey = key;
@@ -209,6 +209,7 @@ public class ViewSendMessageActivity extends AppCompatActivity
             message.sender = displayName;
 
             database.child("messages").child(convo._key).push().setValue(message);
+            messageContent.setText("");
         }
     }
 

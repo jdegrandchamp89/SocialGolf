@@ -91,6 +91,7 @@ public class ViewMessagesFragment extends Fragment {
             ValueEventListener userListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    conversationList = new ArrayList<Conversation>();
                     // Get Post object and use the values to update the UI
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     FirebaseUser userFb = mAuth.getCurrentUser();

@@ -29,5 +29,37 @@ public class Conversation {
         this.groupMembers = new ArrayList<Friends>();
         this.groupMembers = groupMembers;
     }
-    
+
+//    public String get_key() {
+//        return _key;
+//    }
+//
+//    public void set_key(String _key) {
+//        this._key = _key;
+//    }
+//
+//    public String getOwner() {
+//        return owner;
+//    }
+//
+//    public void setOwner(String owner) {
+//        this.owner = owner;
+//    }
+//
+//    public String getLastMessage() {
+//        return lastMessage;
+//    }
+//
+//    public void setLastMessage(String lastMessage) {
+//        this.lastMessage = lastMessage;
+//    }
+//
+//    public List<Friends> getGroupMembers(){
+//        return groupMembers;
+//    }
+//
+//    public void setGroupMembers(List<Friends> groupMembers) {
+//        this.groupMembers = groupMembers;
+//    }
+
 }
