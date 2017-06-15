@@ -81,6 +81,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.john.socialgolf.NavDrawerActivity" />
         </activity>
+        <activity
+            android:name=".ViewSendMessageActivity"
+            android:label="@string/title_activity_view_send_message"
+            android:parentActivityName=".NavDrawerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.john.socialgolf.NavDrawerActivity" />
+        </activity>
     </application>
 
 </manifest>

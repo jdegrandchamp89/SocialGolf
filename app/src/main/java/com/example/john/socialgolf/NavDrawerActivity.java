@@ -3,6 +3,7 @@ package com.example.john.socialgolf;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.john.socialgolf.dataObjects.Conversation;
 import com.example.john.socialgolf.dummy.MessageContent;
 import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
 import com.example.john.socialgolf.dataObjects.TeeTimeItem;
@@ -26,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.parceler.Parcels;
 
 import layout.GolfBuddiesFragment;
 import layout.HomeFragment;
@@ -48,6 +52,7 @@ public class NavDrawerActivity extends AppCompatActivity
     private ActionBarDrawerToggle toggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+    private final int VIEW_MESSAGES = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,7 +246,11 @@ public class NavDrawerActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(MessageContent.MessageItem item) {
-        System.out.println("Interact!");
+    public void onListFragmentInteraction(Conversation item) {
+        Intent toConvo = new Intent(this, ViewSendMessageActivity.class);
+        toConvo.putExtra("key", item._key);
+        Parcelable parcel = Parcels.wrap(item.groupMembers);
+        toConvo.putExtra("members", parcel);
+        startActivityForResult(toConvo, VIEW_MESSAGES);
     }
 }

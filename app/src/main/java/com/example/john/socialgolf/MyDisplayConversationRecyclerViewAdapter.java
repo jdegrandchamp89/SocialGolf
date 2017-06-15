@@ -6,52 +6,45 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.john.socialgolf.ViewMessagesFragment.OnListFragmentInteractionListener;
-import com.example.john.socialgolf.dataObjects.Conversation;
-import com.example.john.socialgolf.dataObjects.Friends;
+import com.example.john.socialgolf.DisplayConversationFragment.OnListFragmentInteractionListener;
+import com.example.john.socialgolf.dataObjects.Messages;
 import com.example.john.socialgolf.dataObjects.TeeTimeItem;
-import com.example.john.socialgolf.dummy.MessageContent;
-import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
+import com.example.john.socialgolf.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
+ * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class ViewMessagesRecyclerViewAdapter extends RecyclerView.Adapter<ViewMessagesRecyclerViewAdapter.ViewHolder> {
+public class MyDisplayConversationRecyclerViewAdapter extends RecyclerView.Adapter<MyDisplayConversationRecyclerViewAdapter.ViewHolder> {
 
-    private List<Conversation> mValues;
+    private List<Messages> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public ViewMessagesRecyclerViewAdapter(List<Conversation> items, OnListFragmentInteractionListener listener) {
+    public MyDisplayConversationRecyclerViewAdapter(List<Messages> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+    }
+
+    public void reloadFrom(final List<Messages> data) {
+        mValues = data;
+        notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_view_messages, parent, false);
+                .inflate(R.layout.fragment_displayconversation, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String displayValue = new String();
         holder.mItem = mValues.get(position);
-        for(Friends member : mValues.get(position).groupMembers){
-            int i = 0;
-
-            if(i == 0){
-                displayValue = member.uid.toString();
-            }else {
-                displayValue = displayValue + "," + member.uid.toString();
-            }
-            i++;
-        }
-        holder.mIdView.setText(displayValue);
-        holder.mContentView.setText(mValues.get(position).lastMessage);
+        holder.mIdView.setText(mValues.get(position).timestamp);
+        holder.mContentView.setText(mValues.get(position).message);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,16 +63,11 @@ public class ViewMessagesRecyclerViewAdapter extends RecyclerView.Adapter<ViewMe
         return mValues.size();
     }
 
-    public void reloadFrom(final List<Conversation> data) {
-        mValues = data;
-        notifyDataSetChanged();
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Conversation mItem;
+        public Messages mItem;
 
         public ViewHolder(View view) {
             super(view);
