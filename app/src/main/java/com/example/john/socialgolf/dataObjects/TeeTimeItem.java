@@ -18,14 +18,15 @@ import java.util.Map;
  */
 public class TeeTimeItem {
 
+    public String _key;
     public String teeTimeDate;
     public String teeTimeTime;
     public List<Friends> groupMembers;
     public String booked;
     public String course;
-    public String _key;
+    public String owner;
 
-    public TeeTimeItem(String teeTimeDate, List<Friends> groupMembers, String booked, String course, String _key) {
+    public TeeTimeItem(String teeTimeDate, List<Friends> groupMembers, String booked, String course, String _key, String owner) {
         this.teeTimeDate = teeTimeDate;
 
         SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
@@ -36,6 +37,7 @@ public class TeeTimeItem {
         this.booked = booked;
         this.course = course;
         this._key = _key;
+        this.owner = owner;
 
     }
 

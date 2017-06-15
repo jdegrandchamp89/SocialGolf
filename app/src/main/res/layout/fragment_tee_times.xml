@@ -8,16 +8,16 @@
 
     <TextView
         android:id="@+id/dateLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:text="Date"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/timeLabel"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="0dp" />
+        android:layout_marginLeft="4dp" />
 
     <TextView
         android:id="@+id/timeLabel"
@@ -29,7 +29,8 @@
         app:layout_constraintRight_toLeftOf="@+id/groupMembersLabel"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp" />
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="0dp" />
 
     <TextView
         android:id="@+id/groupMembersLabel"
@@ -40,7 +41,8 @@
         app:layout_constraintLeft_toRightOf="@+id/timeLabel"
         app:layout_constraintRight_toLeftOf="@+id/bookedLabel"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/bookedLabel"
@@ -51,7 +53,8 @@
         app:layout_constraintLeft_toRightOf="@+id/groupMembersLabel"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp" />
 
     <TextView
         android:id="@+id/date"

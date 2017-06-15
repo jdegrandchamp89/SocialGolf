@@ -10,6 +10,7 @@ import com.example.john.socialgolf.TeeTimesFragment.OnListFragmentInteractionLis
 import com.example.john.socialgolf.dataObjects.TeeTimeItem;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class TeeTimesRecyclerViewAdapter extends RecyclerView.Adapter<TeeTimesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<TeeTimeItem> mValues;
+    private List<TeeTimeItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public TeeTimesRecyclerViewAdapter(List<TeeTimeItem> items, OnListFragmentInteractionListener listener) {
@@ -38,8 +39,8 @@ public class TeeTimesRecyclerViewAdapter extends RecyclerView.Adapter<TeeTimesRe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        SimpleDateFormat localDateFormat = new SimpleDateFormat("MM/dd/yy");
-        holder.mDateView.setText(localDateFormat.format(mValues.get(position).teeTimeDate));
+        SimpleDateFormat localDateFormat = new SimpleDateFormat("M/d/yyyy");
+        holder.mDateView.setText(localDateFormat.format(Date.parse(mValues.get(position).teeTimeDate)));
 
         holder.mTimeView.setText(mValues.get(position).teeTimeTime);
         holder.mGroupMembers.setText(Integer.toString(mValues.get(position).groupMembers.size()));
@@ -61,6 +62,11 @@ public class TeeTimesRecyclerViewAdapter extends RecyclerView.Adapter<TeeTimesRe
     @Override
     public int getItemCount() {
         return mValues.size();
+    }
+
+    public void reloadFrom(final List<TeeTimeItem> data) {
+        mValues = data;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -160,7 +160,7 @@ public class AddTeeTimeActivity extends AppCompatActivity
     private void pickPlace() {
         if (mayRequestLocation()) {
             Intent intent = new Intent(this, PlacePicker.class);
-            intent.putExtra(PlacePicker.EXTRA_QUERY, "golf course");
+            intent.putExtra(PlacePicker.EXTRA_QUERY, "golf");
             startActivityForResult(intent, 9001);
         }
     }
@@ -205,14 +205,18 @@ public class AddTeeTimeActivity extends AppCompatActivity
         item.teeTimeDate = teeTimeDate.getText().toString();
         item.teeTimeTime = teeTimeTime.getText().toString();
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        item.owner = user.getUid();
+
         List<Friends> members = new ArrayList<Friends>();
-        Friends member = new Friends();
         List<String> selected = new ArrayList<String>();
         selected = friendSpinner.getSelectedStrings();
 
         for (String s : selected) {
             for (Users u : usersList) {
                 if(u.email.contentEquals(s)){
+                    Friends member = new Friends();
                     member.uid = u.uid;
                     members.add(member);
                     break;
@@ -221,7 +225,7 @@ public class AddTeeTimeActivity extends AppCompatActivity
         }
 
         item.groupMembers = members;
-        addRef.setValue(item);
+        addRef.push().setValue(item);
 
         Intent toTeeTimes = new Intent(AddTeeTimeActivity.this, NavDrawerActivity.class);
         setResult(MyTeeTimesFragment.ADD_TEE_TIME, toTeeTimes);
@@ -235,8 +239,13 @@ public class AddTeeTimeActivity extends AppCompatActivity
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
-        Date d = new Date(year, month, day);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yyyy");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+
+        Date d = cal.getTime();
         teeTimeDate.setText(dateFormat.format(d));
     }
 
