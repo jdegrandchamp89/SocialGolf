@@ -1,14 +1,8 @@
 package com.example.john.socialgolf.dataObjects;
 
-import com.example.john.socialgolf.dataObjects.Friends;
-
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Helper class for providing sample content for user interfaces created by

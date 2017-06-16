@@ -1,7 +1,6 @@
 package com.example.john.socialgolf;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,9 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.john.socialgolf.dataObjects.Friends;
-import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
 import com.example.john.socialgolf.dataObjects.TeeTimeItem;
-import com.example.john.socialgolf.dataObjects.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * A fragment representing a list of Items.

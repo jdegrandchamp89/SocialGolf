@@ -40,7 +40,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -338,7 +337,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         };
 
         int ADDRESS = 0;
-        int IS_PRIMARY = 1;
+        //int IS_PRIMARY = 1;
     }
 
     /**

@@ -12,10 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.john.socialgolf.AddFriendActivity;
-import com.example.john.socialgolf.LoginActivity;
 import com.example.john.socialgolf.R;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,15 +23,10 @@ import static android.app.Activity.RESULT_OK;
  * create an instance of this fragment.
  */
 public class GolfBuddiesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static int ADDFRIENDRESULT = 1;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,8 +56,8 @@ public class GolfBuddiesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
