@@ -10,17 +10,19 @@ public class Users {
     public String name;
     public String email;
     public String picture;
+    public String aboutMe;
 
     public  Users(){
 
     }
 
-    public Users(String uid, String name, String email, String picture) {
+    public Users(String uid, String name, String email, String picture, String aboutMe) {
 
         this.uid = uid;
         this.name = name;
         this.email = email;
         this.picture = picture;
+        this.aboutMe = aboutMe;
 
     }
 

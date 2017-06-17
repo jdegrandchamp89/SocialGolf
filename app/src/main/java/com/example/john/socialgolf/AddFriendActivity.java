@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.john.socialgolf.dataObjects.Friends;
@@ -25,7 +27,7 @@ import layout.GolfBuddiesFragment;
 
 public class AddFriendActivity extends AppCompatActivity {
 
-    private TextView mEmail;
+    private Spinner mEmail;
     private Button mAddFriend;
     private static final String TAG = "AddFriends";
     private FirebaseAuth mAuth;
@@ -37,7 +39,7 @@ public class AddFriendActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mEmail = (TextView) findViewById(R.id.friendEmail);
+        mEmail = (Spinner) findViewById(R.id.friendEmail);
         mAddFriend = (Button) findViewById(R.id.addButton);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -47,6 +49,36 @@ public class AddFriendActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
+
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> userEmails = new ArrayList<String>();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    //String uid = ds.getValue();
+                    Users users = ds.getValue(Users.class);
+                    String email = users.email;
+                    userEmails.add(email);
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),  android.R.layout.simple_spinner_item, userEmails);
+// Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+                mEmail.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        database.addListenerForSingleValueEvent(userListener);
     }
 
     private void addFriendsToDatabase(){
@@ -61,7 +93,7 @@ public class AddFriendActivity extends AppCompatActivity {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     //String uid = ds.getValue();
                     Users users = ds.getValue(Users.class);
-                    if(users.email.contentEquals(mEmail.getText().toString())){
+                    if(users.email.contentEquals(mEmail.getSelectedItem().toString())){
                         friendUid = users.uid;
                     }
                     usersList.add(users);

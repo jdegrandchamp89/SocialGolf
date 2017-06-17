@@ -42,4 +42,40 @@
         app:layout_constraintRight_toRightOf="@+id/name"
         app:layout_constraintHorizontal_bias="0.0" />
 
+    <TextView
+        android:id="@+id/aboutMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
+        android:text="About Me"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profPicture" />
+
+    <EditText
+        android:id="@+id/aboutMeEdit"
+        android:layout_width="0dp"
+        android:layout_height="116dp"
+        android:ems="10"
+        android:inputType="text|textAutoCorrect|textMultiLine"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/aboutMe"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.666" />
+
+    <Button
+        android:id="@+id/editTextSaveText"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp"
+        android:text="Edit Text"
+        app:layout_constraintLeft_toLeftOf="@+id/aboutMeEdit"
+        app:layout_constraintTop_toBottomOf="@+id/aboutMeEdit" />
+
 </android.support.constraint.ConstraintLayout>

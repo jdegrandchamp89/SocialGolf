@@ -2,6 +2,7 @@ package layout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,11 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.R;
+import com.example.john.socialgolf.dataObjects.Users;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,8 +30,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -58,6 +65,7 @@ public class HomeFragment extends Fragment {
     String mCurrentPhotoPath;
     private static final String TAG = "UpdatePicture";
     ImageView mProfPicture;
+    private String userID;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -104,6 +112,10 @@ public class HomeFragment extends Fragment {
         mProfPicture = (ImageView) view.findViewById(R.id.profPicture);
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView email = (TextView) view.findViewById(R.id.email);
+        EditText aboutMe = (EditText) view.findViewById(R.id.aboutMeEdit);
+        Button editSaveButton = (Button) view.findViewById(R.id.editTextSaveText);
+        editSaveButton.setPaintFlags(editSaveButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        aboutMe.setEnabled(false);
 
         mProfPicture.setOnClickListener(v -> {
             dispatchTakePictureIntent();
@@ -115,6 +127,7 @@ public class HomeFragment extends Fragment {
             Uri picture = user.getPhotoUrl();
             String displayName = user.getDisplayName();
             String displayEmail = user.getEmail();
+            userID = user.getUid();
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
             // Create a storage reference from our app
@@ -131,6 +144,44 @@ public class HomeFragment extends Fragment {
             name.setText(displayName);
             email.setText(displayEmail);
         }
+
+        editSaveButton.setOnClickListener(v -> {
+            String text = editSaveButton.getText().toString();
+            if(text.contentEquals("Edit Text")){
+                aboutMe.setEnabled(true);
+                editSaveButton.setText("Save Text");
+            }else if(text.contentEquals("Save Text")){
+                String about = aboutMe.getText().toString();
+                DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                database.child("users").child(userID).child("aboutMe").setValue(about);
+                aboutMe.setEnabled(false);
+                editSaveButton.setText("Edit Text");
+            }
+        });
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
+
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.child(userID).getChildren()){
+                    //String uid = ds.getValue();
+                    if(ds.getKey().contentEquals("aboutMe")){
+                        String me = ds.getValue().toString();
+                        aboutMe.setText(me);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        database.addValueEventListener(userListener);
 
         return view;
     }
