@@ -45,8 +45,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import layout.GolfBuddiesFragment;
 import layout.MyTeeTimesFragment;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;

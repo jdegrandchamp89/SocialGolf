@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.john.socialgolf.dataObjects.Conversation;
+import com.example.john.socialgolf.dummy.MessageContent;
 import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
 import com.example.john.socialgolf.dataObjects.TeeTimeItem;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -180,6 +181,7 @@ public class NavDrawerActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

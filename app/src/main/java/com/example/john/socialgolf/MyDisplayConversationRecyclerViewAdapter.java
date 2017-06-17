@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.john.socialgolf.DisplayConversationFragment.OnListFragmentInteractionListener;
 import com.example.john.socialgolf.dataObjects.Messages;
+import com.example.john.socialgolf.dataObjects.TeeTimeItem;
 import com.example.john.socialgolf.dummy.DummyContent.DummyItem;
 
 import java.util.List;
