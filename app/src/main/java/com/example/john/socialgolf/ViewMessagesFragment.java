@@ -1,7 +1,6 @@
 package com.example.john.socialgolf;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,10 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.john.socialgolf.dataObjects.Conversation;
 import com.example.john.socialgolf.dataObjects.Friends;
-import com.example.john.socialgolf.dataObjects.GolfBuddiesContent;
 import com.example.john.socialgolf.dataObjects.Users;
-import com.example.john.socialgolf.dummy.MessageContent;
-import com.example.john.socialgolf.dummy.MessageContent.MessageItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -115,7 +111,7 @@ public class ViewMessagesFragment extends Fragment {
                                     }
                                 }
                             }
-                            conversationList.add(convo);
+                            conversationList.add(0, convo);
                         }else{
                             for (Friends member : convo.groupMembers){
                                 if(member.uid.contentEquals(uid)){
@@ -130,7 +126,7 @@ public class ViewMessagesFragment extends Fragment {
                                     break;
                                 }
                             }
-                            conversationList.add(convo);
+                            conversationList.add(0, convo);
                         }
                     }
 

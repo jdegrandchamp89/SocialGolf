@@ -12,10 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.john.socialgolf.AddFriendActivity;
-import com.example.john.socialgolf.LoginActivity;
 import com.example.john.socialgolf.R;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.

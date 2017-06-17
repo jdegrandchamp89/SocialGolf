@@ -1,8 +1,5 @@
 package com.example.john.socialgolf.dataObjects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by WJDY on 6/15/2017.
  */

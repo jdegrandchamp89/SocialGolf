@@ -2,7 +2,6 @@ package layout;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,7 +29,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -42,8 +40,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
-import static android.os.Environment.getExternalStoragePublicDirectory;
-import static com.example.john.socialgolf.R.id.name;
 
 /**
  * A simple {@link Fragment} subclass.

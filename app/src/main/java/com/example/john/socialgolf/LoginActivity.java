@@ -40,7 +40,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -77,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null){
             Intent toHome = new Intent(LoginActivity.this, NavDrawerActivity.class);
@@ -117,8 +116,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-
-        mAuth = FirebaseAuth.getInstance();
     }
 
     private void populateAutoComplete() {

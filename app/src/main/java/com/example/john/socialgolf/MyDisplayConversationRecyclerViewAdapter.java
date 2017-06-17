@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.example.john.socialgolf.DisplayConversationFragment.OnListFragmentInteractionListener;
 import com.example.john.socialgolf.dataObjects.Messages;
-import com.example.john.socialgolf.dataObjects.TeeTimeItem;
 import com.example.john.socialgolf.dummy.DummyContent.DummyItem;
 
 import java.util.List;
@@ -45,6 +44,7 @@ public class MyDisplayConversationRecyclerViewAdapter extends RecyclerView.Adapt
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).timestamp);
         holder.mContentView.setText(mValues.get(position).message);
+        holder.mSenderView.setText(mValues.get(position).sender);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +67,7 @@ public class MyDisplayConversationRecyclerViewAdapter extends RecyclerView.Adapt
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final TextView mSenderView;
         public Messages mItem;
 
         public ViewHolder(View view) {
@@ -74,6 +75,7 @@ public class MyDisplayConversationRecyclerViewAdapter extends RecyclerView.Adapt
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+            mSenderView = (TextView) view.findViewById(R.id.senderName);
         }
 
         @Override
