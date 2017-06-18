@@ -95,10 +95,12 @@ public class TeeTimesFragment extends Fragment {
                         if(teeTime.owner.contentEquals(uid)){
                             teeTimeList.add(0, teeTime);
                         }else{
-                            for (Friends member : teeTime.groupMembers) {
-                                if(member.uid.contentEquals(uid)){
-                                    teeTimeList.add(0, teeTime);
-                                    break;
+                            if(teeTime.groupMembers != null) {
+                                for (Friends member : teeTime.groupMembers) {
+                                    if (member.uid.contentEquals(uid)) {
+                                        teeTimeList.add(0, teeTime);
+                                        break;
+                                    }
                                 }
                             }
                         }

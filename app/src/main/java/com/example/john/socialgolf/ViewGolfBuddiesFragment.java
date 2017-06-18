@@ -109,8 +109,14 @@ public class ViewGolfBuddiesFragment extends Fragment {
                     for (Friends friend : friendsList) {
                         for (Users user : usersList) {
                             if(friend.uid.contentEquals(user.uid)){
-                                GolfBuddiesContent.GolfBuddiesItem item = new GolfBuddiesContent.GolfBuddiesItem(user.name, Uri.parse(user.picture), user.email);
-                                allFriends.add(item);
+                                if(user.picture != null) {
+                                    GolfBuddiesContent.GolfBuddiesItem item = new GolfBuddiesContent.GolfBuddiesItem(user.name, Uri.parse(user.picture), user.email);
+                                    allFriends.add(item);
+                                }else{
+                                    GolfBuddiesContent.GolfBuddiesItem item = new GolfBuddiesContent.GolfBuddiesItem(user.name, null, user.email);
+                                    allFriends.add(item);
+                                }
+
                             }
                         }
                     }

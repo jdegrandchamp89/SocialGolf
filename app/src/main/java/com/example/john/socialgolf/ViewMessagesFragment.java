@@ -107,11 +107,11 @@ public class ViewMessagesFragment extends Fragment {
                                 for (Users user : usersList){
                                     if(member.uid.contentEquals(user.uid)){
                                         member.uid = user.name;
+                                        conversationList.add(0, convo);
                                         break;
                                     }
                                 }
                             }
-                            conversationList.add(0, convo);
                         }else{
                             for (Friends member : convo.groupMembers){
                                 if(member.uid.contentEquals(uid)){
@@ -119,6 +119,7 @@ public class ViewMessagesFragment extends Fragment {
                                         for (Users user : usersList){
                                             if(member2.uid.contentEquals(user.uid)){
                                                 member2.uid = user.name;
+                                                conversationList.add(0, convo);
                                                 break;
                                             }
                                         }
@@ -126,7 +127,6 @@ public class ViewMessagesFragment extends Fragment {
                                     break;
                                 }
                             }
-                            conversationList.add(0, convo);
                         }
                     }
 

@@ -52,12 +52,14 @@ public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<Vie
         FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         // Create a reference to a file from a Google Cloud Storage URI
-        StorageReference gsReference = storage.getReferenceFromUrl(mValues.get(position).picture.toString());
-        String path = gsReference.getPath();
-        Glide.with(holder.mView.getContext())
-                .using(new FirebaseImageLoader())
-                .load(gsReference)
-                .into(holder.mPicture);
+        if(mValues.get(position).picture != null) {
+            StorageReference gsReference = storage.getReferenceFromUrl(mValues.get(position).picture.toString());
+            String path = gsReference.getPath();
+            Glide.with(holder.mView.getContext())
+                    .using(new FirebaseImageLoader())
+                    .load(gsReference)
+                    .into(holder.mPicture);
+        }
         //holder.mPicture.setImageURI(Uri.parse("gs://socialgolf-57614.appspot.com" + path));//mValues.get(position).picture);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
