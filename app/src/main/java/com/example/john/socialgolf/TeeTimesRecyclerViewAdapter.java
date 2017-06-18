@@ -43,7 +43,9 @@ public class TeeTimesRecyclerViewAdapter extends RecyclerView.Adapter<TeeTimesRe
         holder.mDateView.setText(localDateFormat.format(Date.parse(mValues.get(position).teeTimeDate)));
 
         holder.mTimeView.setText(mValues.get(position).teeTimeTime);
-        holder.mGroupMembers.setText(Integer.toString(mValues.get(position).groupMembers.size()));
+        if(mValues.get(position).groupMembers != null) {
+            holder.mGroupMembers.setText(Integer.toString(mValues.get(position).groupMembers.size()));
+        }
         holder.mBooked.setText(mValues.get(position).booked);
         holder.mCourse.setText(mValues.get(position).course);
 

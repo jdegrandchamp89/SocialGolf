@@ -236,12 +236,13 @@ public class NavDrawerActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(TeeTimeItem item) {
-        System.out.println("Interact!");
+
+        //System.out.println("Interact!");
     }
 
     @Override
     public void onListFragmentInteraction(GolfBuddiesContent.GolfBuddiesItem item) {
-        System.out.println("Interact!");
+        //System.out.println("Interact!");
     }
 
     @Override
