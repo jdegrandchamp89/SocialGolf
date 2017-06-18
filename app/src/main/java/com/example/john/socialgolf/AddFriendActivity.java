@@ -60,7 +60,11 @@ public class AddFriendActivity extends AppCompatActivity {
                     //String uid = ds.getValue();
                     Users users = ds.getValue(Users.class);
                     String email = users.email;
-                    userEmails.add(email);
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    String uid = user.getUid();
+                    if(!uid.contentEquals(users.uid)) {
+                        userEmails.add(email);
+                    }
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),  android.R.layout.simple_spinner_item, userEmails);
@@ -73,7 +77,7 @@ public class AddFriendActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // ...
             }
         };
@@ -121,7 +125,7 @@ public class AddFriendActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // ...
             }
         };

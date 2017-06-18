@@ -32,5 +32,5 @@
     <string name="hello_settings">Blank Settings Fragment</string>
     <string name="title_activity_add_friend">Add Friend</string>
     <string name="title_activity_add_tee_time">Add Tee Time</string>
-    <string name="title_activity_view_send_message">ViewSendMessageActivity</string>
+    <string name="title_activity_view_send_message">View and Send Messages</string>
 </resources>
