@@ -113,18 +113,20 @@ public class ViewMessagesFragment extends Fragment {
                                 }
                             }
                         }else{
-                            for (Friends member : convo.groupMembers){
-                                if(member.uid.contentEquals(uid)){
-                                    for (Friends member2 : convo.groupMembers) {
-                                        for (Users user : usersList){
-                                            if(member2.uid.contentEquals(user.uid)){
-                                                member2.uid = user.name;
-                                                conversationList.add(0, convo);
-                                                break;
+                            if(convo.groupMembers != null) {
+                                for (Friends member : convo.groupMembers) {
+                                    if (member.uid.contentEquals(uid)) {
+                                        for (Friends member2 : convo.groupMembers) {
+                                            for (Users user : usersList) {
+                                                if (member2.uid.contentEquals(user.uid)) {
+                                                    member2.uid = user.name;
+                                                    conversationList.add(0, convo);
+                                                    break;
+                                                }
                                             }
                                         }
+                                        break;
                                     }
-                                    break;
                                 }
                             }
                         }
