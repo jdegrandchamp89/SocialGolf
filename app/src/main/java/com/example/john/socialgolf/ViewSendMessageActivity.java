@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.john.socialgolf.dataObjects.Conversation;
 import com.example.john.socialgolf.dataObjects.Friends;
@@ -185,13 +186,19 @@ public class ViewSendMessageActivity extends AppCompatActivity
             List<String> selected = new ArrayList<String>();
             selected = friendSpinner.getSelectedStrings();
 
-            for (String s : selected) {
-                for (Users u : usersList) {
-                    if (u.email.contentEquals(s)) {
-                        Friends member = new Friends();
-                        member.uid = u.uid;
-                        groupMembers.add(member);
-                        break;
+            if(selected.size() == 0){
+                Toast.makeText(this, "Must select at least one conversation member!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }else {
+                for (String s : selected) {
+                    for (Users u : usersList) {
+                        if (u.email.contentEquals(s)) {
+                            Friends member = new Friends();
+                            member.uid = u.uid;
+                            groupMembers.add(member);
+                            break;
+                        }
                     }
                 }
             }
