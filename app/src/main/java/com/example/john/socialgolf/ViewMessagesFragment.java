@@ -103,28 +103,32 @@ public class ViewMessagesFragment extends Fragment {
                     for(DataSnapshot ds : dataSnapshot.child("conversations").getChildren()){
                         Conversation convo = ds.getValue(Conversation.class);
                         if(convo.owner.contentEquals(uid)){
-                            for (Friends member : convo.groupMembers) {
-                                for (Users user : usersList){
-                                    if(member.uid.contentEquals(user.uid)){
-                                        member.uid = user.name;
-                                        conversationList.add(0, convo);
-                                        break;
+                            if(convo.groupMembers != null) {
+                                for (Friends member : convo.groupMembers) {
+                                    for (Users user : usersList) {
+                                        if (member.uid.contentEquals(user.uid)) {
+                                            member.uid = user.name;
+                                            conversationList.add(0, convo);
+                                            break;
+                                        }
                                     }
                                 }
                             }
                         }else{
-                            for (Friends member : convo.groupMembers){
-                                if(member.uid.contentEquals(uid)){
-                                    for (Friends member2 : convo.groupMembers) {
-                                        for (Users user : usersList){
-                                            if(member2.uid.contentEquals(user.uid)){
-                                                member2.uid = user.name;
-                                                conversationList.add(0, convo);
-                                                break;
+                            if(convo.groupMembers != null) {
+                                for (Friends member : convo.groupMembers) {
+                                    if (member.uid.contentEquals(uid)) {
+                                        for (Friends member2 : convo.groupMembers) {
+                                            for (Users user : usersList) {
+                                                if (member2.uid.contentEquals(user.uid)) {
+                                                    member2.uid = user.name;
+                                                    conversationList.add(0, convo);
+                                                    break;
+                                                }
                                             }
                                         }
+                                        break;
                                     }
-                                    break;
                                 }
                             }
                         }
