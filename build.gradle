@@ -3,6 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+
+        maven{
+            url 'https://maven.google.com'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -17,14 +21,17 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        maven{
+            url 'https://maven.google.com'
+        }
     }
 }
 
 ext {
-    glide = 'com.github.bumptech.glide:glide:3.6.1'
+    glide = 'com.github.bumptech.glide:glide:4.2.0'
     glideOkHttp = 'com.github.bumptech.glide:okhttp-integration:1.3.1'
 
-    def playServicesVersion = "10.2.1"
+    def playServicesVersion = "11.4.2"
     playServicesAds = "com.google.android.gms:play-services-ads:${playServicesVersion}"
     playServicesBase = "com.google.android.gms:play-services-base:${playServicesVersion}"
     playServicesLocation = "com.google.android.gms:play-services-location:${playServicesVersion}"

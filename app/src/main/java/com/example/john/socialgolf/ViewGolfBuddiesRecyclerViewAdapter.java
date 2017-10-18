@@ -56,7 +56,7 @@ public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<Vie
             StorageReference gsReference = storage.getReferenceFromUrl(mValues.get(position).picture.toString());
             String path = gsReference.getPath();
             Glide.with(holder.mView.getContext())
-                    .using(new FirebaseImageLoader())
+                    //.using(new FirebaseImageLoader())
                     .load(gsReference)
                     .into(holder.mPicture);
         }

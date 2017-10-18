@@ -99,7 +99,7 @@ public class NavDrawerActivity extends AppCompatActivity
                     StorageReference gsReference = storage.getReferenceFromUrl(picture.toString());
 
                     Glide.with(this)
-                            .using(new FirebaseImageLoader())
+                            //.using(new FirebaseImageLoader())
                             .load(gsReference)
                             .into(profPicture);
                 }

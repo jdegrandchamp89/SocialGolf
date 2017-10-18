@@ -5,19 +5,24 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.john.socialgolf.dataObjects.Friends;
 import com.example.john.socialgolf.dataObjects.Users;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,10 +32,14 @@ import layout.GolfBuddiesFragment;
 
 public class AddFriendActivity extends AppCompatActivity {
 
-    private Spinner mEmail;
+    // removing spinner, refactoring to use ListView 10/17/2017
+    //private Spinner mEmail;
     private Button mAddFriend;
     private static final String TAG = "AddFriends";
     private FirebaseAuth mAuth;
+
+    // new ListView is here below 10/17/2017
+    private ListView mFriendList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +48,9 @@ public class AddFriendActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mEmail = (Spinner) findViewById(R.id.friendEmail);
+
+        // removing spinner, refactoring to use ListView 10/17/2017
+        //mEmail = (Spinner) findViewById(R.id.friendEmail);
         mAddFriend = (Button) findViewById(R.id.addButton);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,7 +61,8 @@ public class AddFriendActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
+        // removing spinner, refactoring to use ListView 10/17/2017
+        /*DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
 
         ValueEventListener userListener = new ValueEventListener() {
             @Override
@@ -80,9 +92,12 @@ public class AddFriendActivity extends AppCompatActivity {
                 //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // ...
             }
-        };
+        };*/
 
-        database.addListenerForSingleValueEvent(userListener);
+        //database.addListenerForSingleValueEvent(userListener);
+
+        // in this method is the new code to populate list view 10/17/2017
+        populateListView();
     }
 
     private void addFriendsToDatabase(){
@@ -97,7 +112,7 @@ public class AddFriendActivity extends AppCompatActivity {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     //String uid = ds.getValue();
                     Users users = ds.getValue(Users.class);
-                    if(users.email.contentEquals(mEmail.getSelectedItem().toString())){
+                    if(users.email.contentEquals(mFriendList.getSelectedItem().toString())){
                         friendUid = users.uid;
                     }
                     usersList.add(users);
@@ -133,4 +148,27 @@ public class AddFriendActivity extends AppCompatActivity {
         database.addListenerForSingleValueEvent(userListener);
     }
 
+    // this is the "sprouted" method for the new ListView that has been added for displaying
+    // potential friends to add 10/17/2017
+    private void populateListView(){
+
+        Query query = FirebaseDatabase.getInstance().getReference().child("users").limitToFirst(50);
+
+        FirebaseListOptions<Users> options = new FirebaseListOptions.Builder<Users>()
+                .setQuery(query, Users.class)
+                .build();
+
+        FirebaseListAdapter<Users> adapter = new FirebaseListAdapter<Users>(options) {
+            @Override
+            protected void populateView(View v, Users model, int position) {
+                // Bind the Chat to the view
+                TextView name = (TextView) findViewById(android.R.id.text1);
+                name.setText(model.name);
+                TextView email = (TextView) findViewById(android.R.id.text2);
+                email.setText(model.email);
+            }
+        };
+
+        mFriendList.setAdapter(adapter);
+    }
 }
