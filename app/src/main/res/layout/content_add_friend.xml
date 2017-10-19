@@ -32,14 +32,29 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:choiceMode="singleChoice"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="false"
         android:headerDividersEnabled="false"
         app:layout_constraintBottom_toTopOf="@+id/addButton"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchText"
         tools:filterTouchesWhenObscured="false" />
+
+    <EditText
+        android:id="@+id/searchText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Search"
+        android:inputType="textPersonName"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--<Spinner
         android:id="@+id/friendEmail"

@@ -144,8 +144,9 @@ public class AddTeeTimeActivity extends AppCompatActivity
                     @Override
                     public void loadImage(Context context, ImageView v, String url) {
                         Glide.with(context)
-                                .load(url)//.placeholder(R.drawable.category_none)
-                                //.dontAnimate()
+                                .load(url)
+                                .placeholder(R.drawable.category_none)
+                                .dontAnimate()
                                 .into(v);
                     }
                 })

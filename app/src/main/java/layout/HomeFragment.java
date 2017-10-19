@@ -137,6 +137,7 @@ public class HomeFragment extends Fragment {
 
                 //mProfPicture.setImageURI(picture);
                 Glide.with(getContext())
+                        .using(new FirebaseImageLoader())
                         .load(gsReference)
                         .into(mProfPicture);
             }
@@ -332,7 +333,7 @@ public class HomeFragment extends Fragment {
                                                 Log.d(TAG, "User profile updated.");
                                                 //mProfPicture.setImageURI(contentUri);
                                                 Glide.with(getContext())
-                                                        //.using(new FirebaseImageLoader())
+                                                        .using(new FirebaseImageLoader())
                                                         .load(gsReference)
                                                         .into(mProfPicture);
                                             }
