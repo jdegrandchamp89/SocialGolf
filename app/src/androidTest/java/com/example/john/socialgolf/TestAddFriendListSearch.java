@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
@@ -32,58 +33,59 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class TestFriendSearchAndAdd {
+public class TestAddFriendListSearch {
 
     @Rule
     public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     @Test
-    public void testFriendSearchAndAdd() {
+    public void testAddFriendListSearch() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(60000);
+            Thread.sleep(35);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction appCompatAutoCompleteTextView = onView(
                 withId(R.id.email));
-        appCompatAutoCompleteTextView.perform(scrollTo(), click());
-
-        ViewInteraction appCompatAutoCompleteTextView2 = onView(
-                withId(R.id.email));
-        appCompatAutoCompleteTextView2.perform(scrollTo(), replaceText("jdegra"), closeSoftKeyboard());
+        appCompatAutoCompleteTextView.perform(scrollTo(), replaceText("jde"), closeSoftKeyboard());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(60000);
+            Thread.sleep(60);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatAutoCompleteTextView3 = onView(
-                allOf(withId(R.id.email), withText("jdegra")));
-        appCompatAutoCompleteTextView3.perform(scrollTo(), replaceText("jdegrandchamp89@gmail.com"), closeSoftKeyboard());
+        ViewInteraction appCompatAutoCompleteTextView2 = onView(
+                allOf(withId(R.id.email), withText("jde")));
+        appCompatAutoCompleteTextView2.perform(scrollTo(), replaceText("jdegrandchamp89@gmail.com"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText = onView(
                 withId(R.id.password));
         appCompatEditText.perform(scrollTo(), replaceText("jojobe123"), closeSoftKeyboard());
 
-        ViewInteraction appCompatButton = onView(
+
+        ViewInteraction appCompatAutoCompleteTextView3 = onView(
+                allOf(withId(R.id.email), withText("jdegrandchamp@gmail.com")));
+        appCompatAutoCompleteTextView3.perform(scrollTo(), replaceText("jdegrandchamp89@gmail.com"), closeSoftKeyboard());
+
+        ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.email_sign_in_button), withText("Sign in"),
                         withParent(allOf(withId(R.id.email_login_form),
                                 withParent(withId(R.id.login_form))))));
-        appCompatButton.perform(scrollTo(), click());
+        appCompatButton2.perform(scrollTo(), click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(3544218);
+            Thread.sleep(3400);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -106,10 +108,12 @@ public class TestFriendSearchAndAdd {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(3590215);
+            Thread.sleep(3500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        pressBack();
 
         ViewInteraction twoLineListItem = onView(
                 allOf(childAtPosition(
@@ -133,7 +137,11 @@ public class TestFriendSearchAndAdd {
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.searchText), isDisplayed()));
-        appCompatEditText2.perform(replaceText("Mary D"), closeSoftKeyboard());
+        appCompatEditText2.perform(click());
+
+        ViewInteraction appCompatEditText3 = onView(
+                allOf(withId(R.id.searchText), isDisplayed()));
+        appCompatEditText3.perform(replaceText("Mary D"), closeSoftKeyboard());
 
         ViewInteraction textView = onView(
                 allOf(withId(android.R.id.text1), withText("Mary D"),
@@ -144,10 +152,6 @@ public class TestFriendSearchAndAdd {
                                 0),
                         isDisplayed()));
         textView.check(matches(withText("Mary D")));
-
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.addButton), withText("Add Friend"), isDisplayed()));
-        appCompatButton2.perform(click());
 
         ViewInteraction twoLineListItem3 = onView(
                 allOf(childAtPosition(
@@ -164,7 +168,7 @@ public class TestFriendSearchAndAdd {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(3531565);
+            Thread.sleep(3400);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
