@@ -32,12 +32,38 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.john.socialgolf.dataObjects.Users;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInApi;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +96,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private FirebaseAuth mAuth;
     private boolean success;
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 9002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +144,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        googleLoginOnCreate();
     }
 
     private void populateAutoComplete() {
@@ -435,6 +465,170 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
+
+        googleLoginOnStart();
+    }
+
+    private void googleLoginOnCreate() {
+
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("60608558981-qo482u7fqngi0ghb8n81ev59kdpjnad0.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        SignInButton googleSignIn = (SignInButton) findViewById(R.id.sign_in_button);
+        googleSignIn.setOnClickListener(v -> {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        });
+    }
+
+    private void googleLoginOnStart(){
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //updateUI(account);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // need to register user if first login with this email
+            firebaseAuthWithGoogle(account);
+
+            // Signed in successfully, show authenticated UI.
+            Intent toHome = new Intent(LoginActivity.this, NavDrawerActivity.class);
+            startActivity(toHome);
+            finish();
+            //updateUI(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            //updateUI(null);
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        // [START_EXCLUDE silent]
+        showProgress(true);
+        // [END_EXCLUDE]
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);  //
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            if( user != null){
+                                Users userObject = null;
+
+                                String uid = user.getUid();
+                                String name = user.getDisplayName();
+                                String email = user.getEmail();
+                                Uri picture = user.getPhotoUrl();
+
+                                userObject = new Users();
+                                userObject.uid = uid;
+                                userObject.name = name;
+                                userObject.email = email;
+                                if(picture != null) {
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setPhotoUri(picture)
+                                            .build();
+
+                                    user.updateProfile(profileUpdates);
+
+                                    Uri profPicture = null;
+
+                                    while (profPicture == null){
+                                        profPicture = user.getPhotoUrl();
+                                    }
+                                    if (profPicture != null){
+                                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                                        // Create a storage reference from our app
+                                        StorageReference storageRef = storage.getReference();
+                                        // Create a reference to "mountains.jpg"
+                                        StorageReference mountainsRef = storageRef.child(picture.getPath());
+
+                                        try{
+                                            InputStream stream = new FileInputStream(new File(picture.getPath()));
+
+                                            UploadTask uploadTask = mountainsRef.putStream(stream);
+                                            uploadTask.addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+                                                    // Handle unsuccessful uploads
+                                                }
+                                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                                    DatabaseReference database2 = FirebaseDatabase.getInstance().getReference("users");
+                                                    database2.child("users").child(uid).child("picture").setValue(downloadUrl.toString());
+
+                                                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                                                    // Create a storage reference from our app
+                                                    // Create a reference to a file from a Google Cloud Storage URI
+                                                    StorageReference gsReference = storage.getReferenceFromUrl(downloadUrl.toString());
+                                                    //String path = gsReference.getPath();
+
+                                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                            .setPhotoUri(downloadUrl)
+                                                            .build();
+                                                }
+                                            });
+                                        }catch(java.io.FileNotFoundException e){
+
+                                        }
+                                    }
+                                }
+
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference myRef = database.getReference("users");
+
+                                myRef.child(uid).setValue(userObject);
+                            }
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+
+                        // [START_EXCLUDE]
+                        showProgress(false);
+                        // [END_EXCLUDE]
+                    }
+                });
     }
 }
 
