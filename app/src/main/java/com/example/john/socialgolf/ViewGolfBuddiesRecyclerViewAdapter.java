@@ -55,10 +55,17 @@ public class ViewGolfBuddiesRecyclerViewAdapter extends RecyclerView.Adapter<Vie
         if(mValues.get(position).picture != null) {
             StorageReference gsReference = storage.getReferenceFromUrl(mValues.get(position).picture.toString());
             String path = gsReference.getPath();
-            Glide.with(holder.mView.getContext())
-                    .using(new FirebaseImageLoader())
-                    .load(gsReference)
-                    .into(holder.mPicture);
+
+            if(mValues.get(position).picture.toString().contains("googleusercontent")){
+                Glide.with(holder.mView.getContext())
+                        .load(mValues.get(position).picture.toString())
+                        .into(holder.mPicture);
+            }else {
+                Glide.with(holder.mView.getContext())
+                        .using(new FirebaseImageLoader())
+                        .load(gsReference)
+                        .into(holder.mPicture);
+            }
         }
         //holder.mPicture.setImageURI(Uri.parse("gs://socialgolf-57614.appspot.com" + path));//mValues.get(position).picture);
 

@@ -1,11 +1,14 @@
 package com.example.john.socialgolf;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,11 +33,15 @@ import com.google.firebase.storage.StorageReference;
 
 import org.parceler.Parcels;
 
+import java.io.InputStream;
+
 import layout.GolfBuddiesFragment;
 import layout.HomeFragment;
 import layout.MessagesFragment;
 import layout.MyTeeTimesFragment;
 import layout.SettingsFragment;
+
+import static java.security.AccessController.getContext;
 
 public class NavDrawerActivity extends AppCompatActivity
         implements  NavigationView.OnNavigationItemSelectedListener,
@@ -91,17 +98,23 @@ public class NavDrawerActivity extends AppCompatActivity
 
                 displayName.setText(name);
                 displayEmail.setText(email);
-                //profPicture.setImageURI(picture);
+                profPicture.setImageURI(picture);
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 // Create a storage reference from our app
                 // Create a reference to a file from a Google Cloud Storage URI
                 if(picture != null){
-                    StorageReference gsReference = storage.getReferenceFromUrl(picture.toString());
+                    if(picture.toString().contains("googleusercontent")){
+                        Glide.with(this)
+                                .load(picture.toString())
+                                .into(profPicture);
+                    }else {
+                        StorageReference gsReference = storage.getReferenceFromUrl(picture.toString());
 
-                    Glide.with(this)
-                            .using(new FirebaseImageLoader())
-                            .load(gsReference)
-                            .into(profPicture);
+                        Glide.with(this)
+                                .using(new FirebaseImageLoader())
+                                .load(gsReference)
+                                .into(profPicture);
+                    }
                 }
             }
         }
@@ -253,4 +266,5 @@ public class NavDrawerActivity extends AppCompatActivity
         toConvo.putExtra("members", parcel);
         startActivityForResult(toConvo, VIEW_MESSAGES);
     }
+
 }

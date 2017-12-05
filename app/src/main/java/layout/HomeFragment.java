@@ -133,13 +133,20 @@ public class HomeFragment extends Fragment {
             // Create a storage reference from our app
             // Create a reference to a file from a Google Cloud Storage URI
             if(picture != null){
-                StorageReference gsReference = storage.getReferenceFromUrl(picture.toString());
 
-                //mProfPicture.setImageURI(picture);
-                Glide.with(getContext())
-                        .using(new FirebaseImageLoader())
-                        .load(gsReference)
-                        .into(mProfPicture);
+                if(picture.toString().contains("googleusercontent")){
+                    Glide.with(this)
+                            .load(picture.toString())
+                            .into(mProfPicture);
+                }else {
+                    StorageReference gsReference = storage.getReferenceFromUrl(picture.toString());
+
+                    //mProfPicture.setImageURI(picture);
+                    Glide.with(getContext())
+                            .using(new FirebaseImageLoader())
+                            .load(gsReference)
+                            .into(mProfPicture);
+                }
             }
             name.setText(displayName);
             email.setText(displayEmail);
