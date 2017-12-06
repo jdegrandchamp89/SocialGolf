@@ -57,6 +57,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -556,6 +557,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 userObject.uid = uid;
                                 userObject.name = name;
                                 userObject.email = email;
+                                String token = FirebaseInstanceId.getInstance().getToken();
+                                userObject.notificationTokens[0] = token;
                                 if(picture != null) {
                                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                             .setPhotoUri(picture)

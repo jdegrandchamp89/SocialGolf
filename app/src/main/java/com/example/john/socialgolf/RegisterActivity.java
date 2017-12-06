@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -156,6 +157,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                     userObject.uid = uid;
                                                     userObject.name = name;
                                                     userObject.email = email;
+                                                    String token = FirebaseInstanceId.getInstance().getToken();
+                                                    userObject.notificationTokens[0] = token;
                                                     if(picture != null) {
                                                         userObject.picture = picture.toString();
                                                     }

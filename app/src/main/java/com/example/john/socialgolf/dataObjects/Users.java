@@ -11,20 +11,20 @@ public class Users {
     public String email;
     public String picture;
     public String aboutMe;
-    public Boolean fromGoogle;
+    public String[] notificationTokens;
 
     public  Users(){
 
     }
 
-    public Users(String uid, String name, String email, String picture, String aboutMe, Boolean fromGoogle) {
+    public Users(String uid, String name, String email, String picture, String aboutMe, String[] notificationTokens) {
 
         this.uid = uid;
         this.name = name;
         this.email = email;
         this.picture = picture;
         this.aboutMe = aboutMe;
-        this.fromGoogle = fromGoogle;
+        this.notificationTokens = notificationTokens;
 
     }
 
