@@ -516,10 +516,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // need to register user if first login with this email
             firebaseAuthWithGoogle(account);
 
-            // Signed in successfully, show authenticated UI.
-            Intent toHome = new Intent(LoginActivity.this, NavDrawerActivity.class);
-            startActivity(toHome);
-            finish();
             //updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -560,64 +556,69 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 String token = FirebaseInstanceId.getInstance().getToken();
                                 userObject.notificationTokens = new ArrayList<String>();
                                 userObject.notificationTokens.add(token);
-                                if(picture != null) {
-                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                            .setPhotoUri(picture)
-                                            .build();
-
-                                    user.updateProfile(profileUpdates);
-
-                                    Uri profPicture = null;
-
-                                    while (profPicture == null){
-                                        profPicture = user.getPhotoUrl();
-                                    }
-                                    if (profPicture != null){
-                                        FirebaseStorage storage = FirebaseStorage.getInstance();
-                                        // Create a storage reference from our app
-                                        StorageReference storageRef = storage.getReference();
-                                        // Create a reference to "mountains.jpg"
-                                        StorageReference mountainsRef = storageRef.child(picture.getPath());
-
-                                        try{
-                                            InputStream stream = new FileInputStream(new File(picture.getPath()));
-
-                                            UploadTask uploadTask = mountainsRef.putStream(stream);
-                                            uploadTask.addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception exception) {
-                                                    // Handle unsuccessful uploads
-                                                }
-                                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                                @Override
-                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                                                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                                                    DatabaseReference database2 = FirebaseDatabase.getInstance().getReference("users");
-                                                    database2.child("users").child(uid).child("picture").setValue(downloadUrl.toString());
-
-                                                    FirebaseStorage storage = FirebaseStorage.getInstance();
-                                                    // Create a storage reference from our app
-                                                    // Create a reference to a file from a Google Cloud Storage URI
-                                                    StorageReference gsReference = storage.getReferenceFromUrl(downloadUrl.toString());
-                                                    //String path = gsReference.getPath();
-
-                                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                            .setPhotoUri(downloadUrl)
-                                                            .build();
-                                                }
-                                            });
-                                        }catch(java.io.FileNotFoundException e){
-
-                                        }
-                                    }
-                                }
+//                                if(picture != null) {
+//                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                                            .setPhotoUri(picture)
+//                                            .build();
+//
+//                                    user.updateProfile(profileUpdates);
+//
+//                                    Uri profPicture = null;
+//
+//                                    while (profPicture == null){
+//                                        profPicture = user.getPhotoUrl();
+//                                    }
+//                                    if (profPicture != null){
+//                                        FirebaseStorage storage = FirebaseStorage.getInstance();
+//                                        // Create a storage reference from our app
+//                                        StorageReference storageRef = storage.getReference();
+//                                        // Create a reference to "mountains.jpg"
+//                                        StorageReference mountainsRef = storageRef.child(picture.getPath());
+//
+//                                        try{
+//                                            InputStream stream = new FileInputStream(new File(picture.getPath()));
+//
+//                                            UploadTask uploadTask = mountainsRef.putStream(stream);
+//                                            uploadTask.addOnFailureListener(new OnFailureListener() {
+//                                                @Override
+//                                                public void onFailure(@NonNull Exception exception) {
+//                                                    // Handle unsuccessful uploads
+//                                                }
+//                                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                                @Override
+//                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//
+//                                                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+//                                                    DatabaseReference database2 = FirebaseDatabase.getInstance().getReference("users");
+//                                                    database2.child("users").child(uid).child("picture").setValue(downloadUrl.toString());
+//
+//                                                    FirebaseStorage storage = FirebaseStorage.getInstance();
+//                                                    // Create a storage reference from our app
+//                                                    // Create a reference to a file from a Google Cloud Storage URI
+//                                                    StorageReference gsReference = storage.getReferenceFromUrl(downloadUrl.toString());
+//                                                    //String path = gsReference.getPath();
+//
+//                                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                                                            .setPhotoUri(downloadUrl)
+//                                                            .build();
+//                                                }
+//                                            });
+//                                        }catch(java.io.FileNotFoundException e){
+//
+//                                        }
+//                                    }
+//                                }
 
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference myRef = database.getReference("users");
 
                                 myRef.child(uid).setValue(userObject);
+
+                                // Signed in successfully, show authenticated UI.
+                                Intent toHome = new Intent(LoginActivity.this, NavDrawerActivity.class);
+                                startActivity(toHome);
+                                finish();
                             }
                             //updateUI(user);
                         } else {
