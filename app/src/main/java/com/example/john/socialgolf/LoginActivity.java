@@ -558,7 +558,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 userObject.name = name;
                                 userObject.email = email;
                                 String token = FirebaseInstanceId.getInstance().getToken();
-                                userObject.notificationTokens[0] = token;
+                                userObject.notificationTokens = new ArrayList<String>();
+                                userObject.notificationTokens.add(token);
                                 if(picture != null) {
                                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                             .setPhotoUri(picture)

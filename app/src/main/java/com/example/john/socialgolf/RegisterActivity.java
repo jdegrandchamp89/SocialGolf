@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText mEmail;
@@ -158,7 +160,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                     userObject.name = name;
                                                     userObject.email = email;
                                                     String token = FirebaseInstanceId.getInstance().getToken();
-                                                    userObject.notificationTokens[0] = token;
+                                                    userObject.notificationTokens = new ArrayList<String>();
+                                                    userObject.notificationTokens.add(token);
                                                     if(picture != null) {
                                                         userObject.picture = picture.toString();
                                                     }
